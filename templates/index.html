@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .form-group input[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+        .prediction {
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .feature-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Breast Cancer Detection</h1>
+        <p>Enter the features of the tumor to predict whether it's benign or malignant.</p>
+    </header>
+
+    <div class="container">
+        <h2>Prediction Form</h2>
+        <form method="POST" action="/predict">
+            <div class="feature-container">
+                {% for feature in feature_names %}
+                    <div class="form-group">
+                        <label for="{{ feature }}">{{ feature }}</label>
+                        <input type="text" id="{{ feature }}" name="feature{{ loop.index }}" placeholder="{{ feature }}" required>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Predict">
+            </div>
+        </form>
+
+        {% if prediction_text %}
+            <div class="prediction">
+                {{ prediction_text }}
+            </div>
+        {% endif %}
+
+        {% if error_message %}
+            <div class="error">
+                {{ error_message }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
